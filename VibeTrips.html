@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Voyages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f5e9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .home {
+            padding: 20px;
+            text-align: center;
+        }
+        .home h2 {
+            color: #4CAF50;
+        }
+        .posters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .posters img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .about, .contact {
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .till-card {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 300px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .trip-gallery {
+            padding: 20px;
+        }
+        .trip-gallery img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .contact-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        #upload-container {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Vibe Voyages</h1>
+        <p>Explore Kenya, Experience the Vibes!</p>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Trip Gallery</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+
+    <section id="home" class="home">
+        <h2>Welcome to Vibe Voyages</h2>
+        <p>Discover Kenya with our curated trips. Below are posters of our upcoming adventures!</p>
+        <div class="posters" id="poster-container"></div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <p>Vibe Voyages is your trusted travel companion for exploring the beauty of Kenya. We plan trips that give you a vibrant and unforgettable experience of nature, culture, and adventure.</p>
+        <div class="till-card">
+            <p>Pay via TILL NUMBER:</p>
+            <h3>4650402</h3>
+        </div>
+    </section>
+
+    <section id="gallery" class="trip-gallery">
+        <h2>Trip Gallery</h2>
+        <p>Check out moments from our past trips! Only the admin can upload posters for upcoming trips.</p>
+        <div id="upload-container">
+            <input type="file" id="upload" multiple>
+            <div id="gallery-container"></div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-icons">
+            <a href="tel:+254796720990">📞 Call Us</a>
+            <a href="https://wa.me/254796720990" target="_blank">💬 WhatsApp</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Vibe Voyages. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const upload = document.getElementById('upload');
+        const galleryContainer = document.getElementById('gallery-container');
+        const posterContainer = document.getElementById('poster-container');
+        const uploadContainer = document.getElementById('upload-container');
+
+        // Check if the user is the admin
+        const isAdmin = confirm("Are you the admin? Click 'OK' to enable upload functionality.");
+        
+        if (isAdmin) {
+            uploadContainer.style.display = 'block';
+        }
+
+        upload.addEventListener('change', (event) => {
+            const files = event.target.files;
+            for (const file of files) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Only image files are allowed!');
+                    continue;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    galleryContainer.appendChild(img);
+                    const posterClone = img.cloneNode();
+                    posterContainer.appendChild(posterClone);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
